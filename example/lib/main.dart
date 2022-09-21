@@ -30,40 +30,56 @@ class Screen1 extends StatefulWidget {
 }
 
 class _Screen1State extends State<Screen1> {
-  TextEditingController _controller = TextEditingController();
+  // TextEditingController _controller = TextEditingController();
   @override
+  bool status = false;
   Widget build(BuildContext context) {
     String one =
-        r" sdcjasnckjas sdalkicjasclkas sdcljasdolciasd <br> jkasdhckjasd sakldchnkjasdc ijsdacoikasd \(\frac{1}{\sqrt{2}+1}+\frac{1}{\sqrt{3}+\sqrt{2}}+\frac{1}{\sqrt{4}+\sqrt{3}}+\frac{1}{\sqrt{5}+\sqrt{4}}+\ldots+\frac{1}{\sqrt{100}-\sqrt{99}}\)<br>มีค่าเท่าใด";
+        r" sdcjasnckjas sdalkicjasclkas sdcljasdolciasd <br><>< $\sqrt[1]{>}$jkasdhckjasd sakldchnkjasdc ijsdacoikasd \(\frac{1}{\sqrt{2}+1}+\frac{1}{\sqrt{3}+\sqrt{2}}+\frac{1}{\sqrt{4}+\sqrt{3}}+\frac{1}{\sqrt{5}+\sqrt{4}}+\ldots+\frac{1}{\sqrt{100}-\sqrt{99}}\)<br>มีค่าเท่าใด";
     String two = one
         .replaceAll("\\(", "\$")
         .replaceAll("\\)", "\$")
         .replaceAll("<br>", "\n");
-    return MathKeyboardViewInsets(
+
+    return LatexKeyboardViewInsert(
+      value: status,
+      // controller: _controller,
       child: Scaffold(
-        body: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: 20,
-                  itemBuilder: ((context, index) {
-                    return InkWell(
-                      onTap: () {
-                        Get.to(DetailPage(data: two));
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: CovertLatex(
-                          laTeXCode: Text(two),
-                        ),
-                      ),
-                    );
-                  })),
-              IconButton(onPressed: () {}, icon: Icon(Icons.keyboard))
-            ],
-          ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CovertLatex(
+              laTeXCode: Text(two),
+            ),
+            // TextField(
+            //   controller: _controller,
+            // ),
+            // Container(height: 100, color: status ? Colors.black : Colors.amber),
+            // ListView.builder(
+            //     shrinkWrap: true,
+            //     itemCount: 20,
+            //     itemBuilder: ((context, index) {
+            //       return InkWell(
+            //         onTap: () {
+            //           Get.to(DetailPage(data: two));
+            //         },
+            //         child: Padding(
+            //           padding: const EdgeInsets.all(10.0),
+            //           child: CovertLatex(
+            //             laTeXCode: Text(two),
+            //           ),
+            //         ),
+            //       );
+            //     })),
+            IconButton(
+                onPressed: () {
+                  setState(() {
+                    status = !status;
+                    print(status);
+                  });
+                },
+                icon: Icon(Icons.safety_check))
+          ],
         ),
       ),
     );
