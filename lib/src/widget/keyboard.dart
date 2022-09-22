@@ -17,36 +17,46 @@ class LatexKeyboard extends StatefulWidget {
   final ValueSetter<String> onTextInput;
   final VoidCallback onBackspace;
   final FocusNode node;
-
   @override
   State<LatexKeyboard> createState() => _LatexKeyboardState();
 }
 
 class _LatexKeyboardState extends State<LatexKeyboard> {
   bool isCapital = true;
-
+  bool isFuncation = false;
   void textInputHandler(String text) => widget.onTextInput.call(text);
 
   void backspaceHandler() => widget.onBackspace.call();
 
   Widget build(BuildContext context) {
     return AnimatedContainer(
-        duration: Duration(milliseconds: 200),
         height: widget.value ? 250 : 0,
+        duration: Duration(milliseconds: 200),
         color: widget.value ? Colors.grey.shade200 : Colors.transparent,
         child: SafeArea(
           top: false,
           child: widget.value
-              ? Column(
-                  // mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    number(),
-                    alpha1(),
-                    alpha2(),
-                    alpha3(),
-                    buildRowThree()
-                  ],
-                )
+              ? isFuncation
+                  ? Column(
+                      // mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        number(),
+                        latexkey1(),
+                        latexkey1(),
+                        latexkey1(),
+                        funcationKey(),
+                      ],
+                    )
+                  : Column(
+                      // mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        number(),
+                        alpha1(),
+                        alpha2(),
+                        alpha3(),
+                        funcationKey(),
+                      ],
+                    )
               : Container(),
         ));
   }
@@ -286,24 +296,68 @@ class _LatexKeyboardState extends State<LatexKeyboard> {
     ));
   }
 
-  Expanded buildRowThree() {
+  latexkey1() {
     return Expanded(
         child: Row(
       children: [
         LatexKey(
+          KeyboardText: "start",
+          LatexText: r"$",
+          onTextInput: textInputHandler,
+        ),
+        LatexKey(
           KeyboardText: "/",
-          LatexText: r"$\frac{\square}{\square}$",
+          LatexText: r"\frac{\square}{\square}",
+          onTextInput: textInputHandler,
+        ),
+        LatexKey(
+          KeyboardText: "π",
+          LatexText: r"\pi",
+          onTextInput: textInputHandler,
+        ),
+        LatexKey(
+          KeyboardText: "θ",
+          LatexText: r"\theta",
+          onTextInput: textInputHandler,
+        ),
+        LatexKey(
+          KeyboardText: "α",
+          LatexText: r"\alpha",
           onTextInput: textInputHandler,
         ),
         LatexKey(
           KeyboardText: "√",
-          LatexText: r"$\sqrt[\square]{\square}$",
+          LatexText: r"\sqrt[\square]{\square}",
           onTextInput: textInputHandler,
+        ),
+        LatexKey(
+          KeyboardText: "end",
+          LatexText: r"$",
+          onTextInput: textInputHandler,
+        ),
+      ],
+    ));
+  }
+
+  funcationKey() {
+    return Expanded(
+        child: Row(
+      children: [
+        ButtonKey(
+          color: Colors.white,
+          flex: 2,
+          iconsColors: Colors.black,
+          icon: Icons.functions,
+          tap: () {
+            setState(() {
+              isFuncation = !isFuncation;
+            });
+          },
         ),
         ButtonKey(
           color: Colors.white,
           flex: 5,
-          icon: Icons.next_plan,
+          // icon: Icons.next_plan,
           tap: () {
             textInputHandler(" ");
           },
@@ -345,19 +399,18 @@ class ButtonKey extends StatelessWidget {
     return Expanded(
       flex: flex,
       child: Padding(
-        padding: const EdgeInsets.all(1.0),
+        padding: const EdgeInsets.all(4.0),
         child: Material(
           color: color,
           child: InkWell(
             onTap: tap,
-            child: Container(
-              child: Center(
-                child: Icon(
-                  icon,
-                  color: iconsColors,
-                ),
-              ),
-            ),
+            child: Center(
+                child: icon == null
+                    ? Container()
+                    : Icon(
+                        icon,
+                        color: iconsColors,
+                      )),
           ),
         ),
       ),

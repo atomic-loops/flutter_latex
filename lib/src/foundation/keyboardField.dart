@@ -20,7 +20,7 @@ class LatexKey extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
         child: Padding(
-      padding: EdgeInsets.all(7),
+      padding: EdgeInsets.all(6),
       child: Material(
           color: Colors.grey.shade50,
           child: InkWell(
