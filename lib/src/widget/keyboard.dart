@@ -4,31 +4,54 @@ import 'package:flutter/material.dart';
 import 'package:flutter_latex/src/foundation/keyboardField.dart';
 import 'package:flutter_latex/src/widget/view_insets.dart';
 
-class LatexKeyboard extends StatelessWidget {
+class LatexKeyboard extends StatefulWidget {
   @override
   LatexKeyboard({
     Key? key,
-    this.onTextInput,
-    this.onBackspace,
-    this.value = false,
+    required this.value,
+    required this.onTextInput,
+    required this.onBackspace,
+    required this.node,
   }) : super(key: key);
   final bool value;
-  final ValueSetter<String>? onTextInput;
-  final VoidCallback? onBackspace;
-  void textInputHandler(String text) => onTextInput!.call(text);
-  void backspaceHandler() => onBackspace!.call();
+  final ValueSetter<String> onTextInput;
+  final VoidCallback onBackspace;
+  final FocusNode node;
+
+  @override
+  State<LatexKeyboard> createState() => _LatexKeyboardState();
+}
+
+class _LatexKeyboardState extends State<LatexKeyboard> {
+  bool isCapital = true;
+
+  void textInputHandler(String text) => widget.onTextInput.call(text);
+
+  void backspaceHandler() => widget.onBackspace.call();
+
   Widget build(BuildContext context) {
     return AnimatedContainer(
-        duration: Duration(milliseconds: 100),
-        height: value ? 200 : 0,
-        color: value ? Colors.grey.shade200 : Colors.transparent,
-        child: Column(
-          // mainAxisAlignment: MainAxisAlignment.center,
-          children: [buildRowOne(), buildRowOne(), buildRowOne()],
+        duration: Duration(milliseconds: 200),
+        height: widget.value ? 250 : 0,
+        color: widget.value ? Colors.grey.shade200 : Colors.transparent,
+        child: SafeArea(
+          top: false,
+          child: widget.value
+              ? Column(
+                  // mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    number(),
+                    alpha1(),
+                    alpha2(),
+                    alpha3(),
+                    buildRowThree()
+                  ],
+                )
+              : Container(),
         ));
   }
 
-  Expanded buildRowOne() {
+  Expanded number() {
     return Expanded(
         child: Row(
       children: [
@@ -38,183 +61,306 @@ class LatexKeyboard extends StatelessWidget {
           onTextInput: textInputHandler,
         ),
         LatexKey(
-          KeyboardText: "1",
-          LatexText: "1",
+          KeyboardText: "2",
+          LatexText: "2",
           onTextInput: textInputHandler,
         ),
         LatexKey(
-          KeyboardText: "1",
-          LatexText: "1",
+          KeyboardText: "3",
+          LatexText: "3",
           onTextInput: textInputHandler,
         ),
         LatexKey(
-          KeyboardText: "1",
-          LatexText: "1",
+          KeyboardText: "4",
+          LatexText: "4",
           onTextInput: textInputHandler,
         ),
         LatexKey(
-          KeyboardText: "1",
-          LatexText: "1",
+          KeyboardText: "5",
+          LatexText: "5",
           onTextInput: textInputHandler,
         ),
         LatexKey(
-          KeyboardText: "1",
-          LatexText: "1",
+          KeyboardText: "6",
+          LatexText: "6",
           onTextInput: textInputHandler,
         ),
         LatexKey(
-          KeyboardText: "1",
-          LatexText: "1",
+          KeyboardText: "7",
+          LatexText: "7",
           onTextInput: textInputHandler,
         ),
         LatexKey(
-          KeyboardText: "1",
-          LatexText: "1",
+          KeyboardText: "8",
+          LatexText: "8",
+          onTextInput: textInputHandler,
+        ),
+        LatexKey(
+          KeyboardText: "9",
+          LatexText: "9",
+          onTextInput: textInputHandler,
+        ),
+        LatexKey(
+          KeyboardText: "0",
+          LatexText: "0",
           onTextInput: textInputHandler,
         ),
       ],
     ));
   }
-  // void _insertText(String myText) {
-  //   final text = controller.text;
-  //   final textSelection = controller.selection;
-  //   final newText = text.replaceRange(
-  //     textSelection.start,
-  //     textSelection.end,
-  //     myText,
-  //   );
-  //   final myTextLength = myText.length;
-  //   controller.text = newText;
-  //   controller.selection = textSelection.copyWith(
-  //     baseOffset: textSelection.start + myTextLength,
-  //     extentOffset: textSelection.start + myTextLength,
-  //   );
-  // }
 
-  // void _backspace() {
-  //   final text = controller.text;
-  //   final textSelection = controller.selection;
-  //   final selectionLength = textSelection.end - textSelection.start;
+  Expanded alpha1() {
+    return Expanded(
+        child: Row(
+      children: [
+        LatexKey(
+          KeyboardText: isCapital ? "Q" : "q",
+          LatexText: isCapital ? "Q" : "q",
+          onTextInput: textInputHandler,
+        ),
+        LatexKey(
+          KeyboardText: isCapital ? "W" : "w",
+          LatexText: isCapital ? "W" : "w",
+          onTextInput: textInputHandler,
+        ),
+        LatexKey(
+          KeyboardText: isCapital ? "E" : "e",
+          LatexText: isCapital ? "E" : "e",
+          onTextInput: textInputHandler,
+        ),
+        LatexKey(
+          KeyboardText: isCapital ? "R" : "r",
+          LatexText: isCapital ? "R" : "r",
+          onTextInput: textInputHandler,
+        ),
+        LatexKey(
+          KeyboardText: isCapital ? "T" : "t",
+          LatexText: isCapital ? "T" : "t",
+          onTextInput: textInputHandler,
+        ),
+        LatexKey(
+          KeyboardText: isCapital ? "Y" : "y",
+          LatexText: isCapital ? "Y" : "y",
+          onTextInput: textInputHandler,
+        ),
+        LatexKey(
+          KeyboardText: isCapital ? "U" : "u",
+          LatexText: isCapital ? "U" : "u",
+          onTextInput: textInputHandler,
+        ),
+        LatexKey(
+          KeyboardText: isCapital ? "I" : "i",
+          LatexText: isCapital ? "I" : "i",
+          onTextInput: textInputHandler,
+        ),
+        LatexKey(
+          KeyboardText: isCapital ? "O" : "o",
+          LatexText: isCapital ? "O" : "o",
+          onTextInput: textInputHandler,
+        ),
+        LatexKey(
+          KeyboardText: isCapital ? "P" : "p",
+          LatexText: isCapital ? "P" : "p",
+          onTextInput: textInputHandler,
+        ),
+      ],
+    ));
+  }
 
-  //   // There is a selection.
-  //   if (selectionLength > 0) {
-  //     final newText = text.replaceRange(
-  //       textSelection.start,
-  //       textSelection.end,
-  //       '',
-  //     );
-  //     controller.text = newText;
-  //     controller.selection = textSelection.copyWith(
-  //       baseOffset: textSelection.start,
-  //       extentOffset: textSelection.start,
-  //     );
-  //     return;
-  //   }
+  alpha3() {
+    return Expanded(
+        child: Row(
+      children: [
+        ButtonKey(
+          color: Colors.white,
+          flex: 2,
+          iconsColors: isCapital ? Colors.blue : Colors.black,
+          icon: Icons.upgrade,
+          tap: () {
+            setState(() {
+              isCapital = !isCapital;
+            });
+          },
+        ),
+        LatexKey(
+          KeyboardText: isCapital ? "Z" : "z",
+          LatexText: isCapital ? "Z" : "z",
+          onTextInput: textInputHandler,
+        ),
+        LatexKey(
+          KeyboardText: isCapital ? "X" : "x",
+          LatexText: isCapital ? "X" : "x",
+          onTextInput: textInputHandler,
+        ),
+        LatexKey(
+          KeyboardText: isCapital ? "C" : "c",
+          LatexText: isCapital ? "C" : "c",
+          onTextInput: textInputHandler,
+        ),
+        LatexKey(
+          KeyboardText: isCapital ? "V" : "v",
+          LatexText: isCapital ? "V" : "v",
+          onTextInput: textInputHandler,
+        ),
+        LatexKey(
+          KeyboardText: isCapital ? "B" : "b",
+          LatexText: isCapital ? "B" : "b",
+          onTextInput: textInputHandler,
+        ),
+        LatexKey(
+          KeyboardText: isCapital ? "N" : "n",
+          LatexText: isCapital ? "N" : "n",
+          onTextInput: textInputHandler,
+        ),
+        LatexKey(
+          KeyboardText: isCapital ? "M" : "m",
+          LatexText: isCapital ? "M" : "m",
+          onTextInput: textInputHandler,
+        ),
+        ButtonKey(
+          color: Colors.blue,
+          flex: 2,
+          icon: Icons.done,
+          iconsColors: Colors.white,
+          tap: () {
+            widget.node.unfocus();
+          },
+        ),
+      ],
+    ));
+  }
 
-  //   // The cursor is at the beginning.
-  //   if (textSelection.start == 0) {
-  //     return;
-  //   }
+  Expanded alpha2() {
+    return Expanded(
+        child: Padding(
+      padding: const EdgeInsets.only(left: 15, right: 15),
+      child: Row(
+        children: [
+          LatexKey(
+            KeyboardText: isCapital ? "A" : "a",
+            LatexText: isCapital ? "A" : "a",
+            onTextInput: textInputHandler,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? "S" : "s",
+            LatexText: isCapital ? "S" : "s",
+            onTextInput: textInputHandler,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? "D" : "d",
+            LatexText: isCapital ? "D" : "d",
+            onTextInput: textInputHandler,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? "F" : "f",
+            LatexText: isCapital ? "F" : "f",
+            onTextInput: textInputHandler,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? "G" : "g",
+            LatexText: isCapital ? "G" : "g",
+            onTextInput: textInputHandler,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? "H" : "h",
+            LatexText: isCapital ? "H" : "h",
+            onTextInput: textInputHandler,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? "J" : "j",
+            LatexText: isCapital ? "J" : "j",
+            onTextInput: textInputHandler,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? "K" : "k",
+            LatexText: isCapital ? "K" : "k",
+            onTextInput: textInputHandler,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? "L" : "l",
+            LatexText: isCapital ? "L" : "l",
+            onTextInput: textInputHandler,
+          ),
+        ],
+      ),
+    ));
+  }
 
-  //   // Delete the previous character
-  //   final previousCodeUnit = text.codeUnitAt(textSelection.start - 1);
-  //   final offset = _isUtf16Surrogate(previousCodeUnit) ? 2 : 1;
-  //   final newStart = textSelection.start - offset;
-  //   final newEnd = textSelection.start;
-  //   final newText = text.replaceRange(
-  //     newStart,
-  //     newEnd,
-  //     '',
-  //   );
-  //   controller.text = newText;
-  //   controller.selection = textSelection.copyWith(
-  //     baseOffset: newStart,
-  //     extentOffset: newStart,
-  //   );
-  // }
-
-  // bool _isUtf16Surrogate(int value) {
-  //   return value & 0xF800 == 0xD800;
-  // }
+  Expanded buildRowThree() {
+    return Expanded(
+        child: Row(
+      children: [
+        LatexKey(
+          KeyboardText: "/",
+          LatexText: r"$\frac{\square}{\square}$",
+          onTextInput: textInputHandler,
+        ),
+        LatexKey(
+          KeyboardText: "√",
+          LatexText: r"$\sqrt[\square]{\square}$",
+          onTextInput: textInputHandler,
+        ),
+        ButtonKey(
+          color: Colors.white,
+          flex: 5,
+          icon: Icons.next_plan,
+          tap: () {
+            textInputHandler(" ");
+          },
+        ),
+        ButtonKey(
+          color: Colors.white,
+          flex: 2,
+          icon: Icons.backspace,
+          tap: () {
+            widget.onBackspace.call();
+          },
+        ),
+      ],
+    ));
+  }
 }
 
-// / / enum MathKeyboardType {
-//   /// Keyboard for entering complete math expressions.
-//   ///
-//   /// This shows numbers + operators and a toggle button to switch to another
-//   /// page with extended functions.
-//   expression,
+class ButtonKey extends StatelessWidget {
+  final IconData? icon;
 
-//   /// Keyboard for number input only.
-//   numberOnly,
-// }
+  var color;
 
-/// Widget displaying the math keyboard.
-// class MathKeyboard extends StatelessWidget {
-//   /// Constructs a [MathKeyboard].
-//   const MathKeyboard({
-//     Key? key,
-//     required this.controller,
-//     this.variables = const [],
-//     this.onSubmit,
-//     this.insetsState,
-//     this.slideAnimation,
-//   }) : super(key: key);
+  var iconsColors;
 
-//   /// The controller for editing the math field.
-//   ///
-//   /// Must not be `null`.
-//   final TextEditingController controller;
+  ButtonKey({
+    Key? key,
+    this.icon,
+    required this.color,
+    this.iconsColors,
+    this.flex = 1,
+    this.tap,
+  }) : super(key: key);
 
-//   /// The state for reporting the keyboard insets.
-//   ///
-//   /// If `null`, the math keyboard will not report about its bottom inset.
-//   final MathKeyboardViewInsetsState? insetsState;
+  final tap;
+  final int flex;
 
-//   /// Animation that indicates the current slide progress of the keyboard.
-//   ///
-//   /// If `null`, the keyboard is always fully slided out.
-//   final Animation<double>? slideAnimation;
-
-//   /// The Variables a user can use.
-//   final List<String> variables;
-
-//   /// The Type of the Keyboard.
-//   // final MathKeyboardType type;
-
-//   /// Function that is called when the enter / submit button is tapped.
-//   ///
-//   /// Can be `null`.
-//   final VoidCallback? onSubmit;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final curvedSlideAnimation = CurvedAnimation(
-//       parent: slideAnimation ?? AlwaysStoppedAnimation(1),
-//       curve: Curves.ease,
-//     );
-
-//     return SlideTransition(
-//       position: Tween<Offset>(
-//         begin: const Offset(0, 1),
-//         end: const Offset(0, 0),
-//       ).animate(curvedSlideAnimation),
-//       child: Stack(
-//         children: [
-//           Positioned(
-//             bottom: 0,
-//             left: 0,
-//             right: 0,
-//             child: Material(
-//               type: MaterialType.transparency,
-//               child: ColoredBox(
-//                 color: Colors.black,
-//                 child: SafeArea(top: false, child: Container()),
-//               ),
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      flex: flex,
+      child: Padding(
+        padding: const EdgeInsets.all(1.0),
+        child: Material(
+          color: color,
+          child: InkWell(
+            onTap: tap,
+            child: Container(
+              child: Center(
+                child: Icon(
+                  icon,
+                  color: iconsColors,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

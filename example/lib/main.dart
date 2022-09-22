@@ -30,12 +30,12 @@ class Screen1 extends StatefulWidget {
 }
 
 class _Screen1State extends State<Screen1> {
-  // TextEditingController _controller = TextEditingController();
+  TextEditingController _controller = TextEditingController();
+  FocusNode node = FocusNode();
   @override
+  String one = r"";
   bool status = false;
   Widget build(BuildContext context) {
-    String one =
-        r" sdcjasnckjas sdalkicjasclkas sdcljasdolciasd <br><>< $\sqrt[1]{>}$jkasdhckjasd sakldchnkjasdc ijsdacoikasd \(\frac{1}{\sqrt{2}+1}+\frac{1}{\sqrt{3}+\sqrt{2}}+\frac{1}{\sqrt{4}+\sqrt{3}}+\frac{1}{\sqrt{5}+\sqrt{4}}+\ldots+\frac{1}{\sqrt{100}-\sqrt{99}}\)<br>มีค่าเท่าใด";
     String two = one
         .replaceAll("\\(", "\$")
         .replaceAll("\\)", "\$")
@@ -43,17 +43,32 @@ class _Screen1State extends State<Screen1> {
 
     return LatexKeyboardViewInsert(
       value: status,
-      // controller: _controller,
+      controller: _controller,
+      onChanged: (value) {
+        setState(() {
+          one = value;
+        });
+      },
+      node: node,
       child: Scaffold(
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CovertLatex(
-              laTeXCode: Text(two),
+            LatexField(
+              controller: _controller,
+              node: node,
+              isVisible: ((value) {
+                setState(() {
+                  status = value;
+                });
+              }),
             ),
-            // TextField(
-            //   controller: _controller,
-            // ),
+
+            Text(one),
+            CovertLatex(
+              laTeXCode: Text(one),
+            ),
+            // TextField(),
             // Container(height: 100, color: status ? Colors.black : Colors.amber),
             // ListView.builder(
             //     shrinkWrap: true,
@@ -71,14 +86,15 @@ class _Screen1State extends State<Screen1> {
             //         ),
             //       );
             //     })),
-            IconButton(
-                onPressed: () {
-                  setState(() {
-                    status = !status;
-                    print(status);
-                  });
-                },
-                icon: Icon(Icons.safety_check))
+            // IconButton(
+            //     onPressed: () {
+            //       // node.addListener(() => print(node.hasFocus));
+            //       setState(() {
+            //         status = !status;
+            //         // print(status);
+            //       });
+            //     },
+            //     icon: Icon(Icons.safety_check))
           ],
         ),
       ),
