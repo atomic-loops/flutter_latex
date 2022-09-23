@@ -62,7 +62,7 @@ class _CovertLatexState extends State<CovertLatex> {
               laTeXMatch.group(3)!.trim(),
               textStyle: TextStyle(
                   color: Colors.black,
-                  fontSize: laTeXMatch.group(3)!.length > 50 ? 12 : 20),
+                  fontSize: laTeXMatch.group(3)!.length > 90 ? 12 : 20),
             )));
       } else {
         textBlocks.addAll([

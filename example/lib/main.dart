@@ -33,7 +33,8 @@ class _Screen1State extends State<Screen1> {
   TextEditingController _controller = TextEditingController();
   FocusNode node = FocusNode();
   @override
-  String one = r"";
+  String one =
+      r"\((\sqrt{2}+\sqrt{8}+\sqrt{18}+\sqrt{32}+\ldots+\sqrt{200})^{2}\) มีค่าเท่าใด";
   bool status = false;
   Widget build(BuildContext context) {
     String two = one
@@ -63,38 +64,10 @@ class _Screen1State extends State<Screen1> {
                 });
               }),
             ),
-
-            Text(one),
+            Text(two),
             CovertLatex(
-              laTeXCode: Text(one),
+              laTeXCode: Text(two),
             ),
-            // TextField(),
-            // Container(height: 100, color: status ? Colors.black : Colors.amber),
-            // ListView.builder(
-            //     shrinkWrap: true,
-            //     itemCount: 20,
-            //     itemBuilder: ((context, index) {
-            //       return InkWell(
-            //         onTap: () {
-            //           Get.to(DetailPage(data: two));
-            //         },
-            //         child: Padding(
-            //           padding: const EdgeInsets.all(10.0),
-            //           child: CovertLatex(
-            //             laTeXCode: Text(two),
-            //           ),
-            //         ),
-            //       );
-            //     })),
-            // IconButton(
-            //     onPressed: () {
-            //       // node.addListener(() => print(node.hasFocus));
-            //       setState(() {
-            //         status = !status;
-            //         // print(status);
-            //       });
-            //     },
-            //     icon: Icon(Icons.safety_check))
           ],
         ),
       ),
