@@ -3,8 +3,14 @@
 import 'package:flutter/material.dart';
 
 class LatexKey extends StatelessWidget {
-  const LatexKey({
+  var onLongPress;
+
+  var onHightChange;
+
+  LatexKey({
     Key? key,
+    this.onLongPress,
+    this.onHightChange,
     required this.KeyboardText,
     required this.LatexText,
     required this.onTextInput,
@@ -24,6 +30,8 @@ class LatexKey extends StatelessWidget {
       child: Material(
           color: Colors.grey.shade50,
           child: InkWell(
+            onLongPress: onLongPress,
+            onHighlightChanged: onHightChange,
             onTap: () {
               onTextInput.call(LatexText);
             },

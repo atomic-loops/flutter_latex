@@ -1,7 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_latex/src/foundation/keyboardField.dart';
+import 'package:flutter_latex/src/widget/covert_latex.dart';
+import 'package:flutter_latex/src/widget/preview.dart';
 import 'package:flutter_latex/src/widget/view_insets.dart';
 
 class LatexKeyboard extends StatefulWidget {
@@ -27,10 +31,12 @@ class _LatexKeyboardState extends State<LatexKeyboard> {
   void textInputHandler(String text) => widget.onTextInput.call(text);
 
   void backspaceHandler() => widget.onBackspace.call();
-
+  String value = "Long press on latex to preview";
+  bool isHighLight = false;
+  bool isLong = false;
   Widget build(BuildContext context) {
     return AnimatedContainer(
-        height: widget.value ? 250 : 0,
+        height: widget.value ? 320 : 0,
         duration: Duration(milliseconds: 200),
         color: widget.value ? Colors.grey.shade200 : Colors.transparent,
         child: SafeArea(
@@ -40,6 +46,23 @@ class _LatexKeyboardState extends State<LatexKeyboard> {
                   ? Column(
                       // mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        Expanded(
+                          flex: 2,
+                          child: Padding(
+                            padding: const EdgeInsets.all(6.0),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Material(
+                                color: widget.value
+                                    ? Colors.grey.shade200
+                                    : Colors.transparent,
+                                child: CovertLatex(
+                                  laTeXCode: Text(value),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                         number(),
                         latexkey1(),
                         latexkey1(),
@@ -50,6 +73,23 @@ class _LatexKeyboardState extends State<LatexKeyboard> {
                   : Column(
                       // mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        Expanded(
+                          flex: 2,
+                          child: Padding(
+                            padding: const EdgeInsets.all(6.0),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Material(
+                                color: widget.value
+                                    ? Colors.grey.shade200
+                                    : Colors.transparent,
+                                child: CovertLatex(
+                                  laTeXCode: Text(value),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                         number(),
                         alpha1(),
                         alpha2(),
@@ -66,6 +106,8 @@ class _LatexKeyboardState extends State<LatexKeyboard> {
         child: Row(
       children: [
         LatexKey(
+          // onLongPress: () {},
+
           KeyboardText: "1",
           LatexText: "1",
           onTextInput: textInputHandler,
@@ -306,6 +348,29 @@ class _LatexKeyboardState extends State<LatexKeyboard> {
           onTextInput: textInputHandler,
         ),
         LatexKey(
+          onLongPress: () {
+            setState(() {
+              isLong = true;
+            });
+          },
+          onHightChange: (v) {
+            setState(() {
+              isHighLight = v;
+            });
+            if (isHighLight == true) {
+              setState(() {
+                value = r"\frac{1}{2} $\rightarrow$ $\frac{1}{2}$";
+              });
+            } else {
+              Future.delayed(const Duration(seconds: 2), () {
+                change();
+              });
+            }
+            //else {
+            //   Timer(Duration(seconds: 1), change());
+            // }
+            print(isHighLight);
+          },
           KeyboardText: "/",
           LatexText: r"\frac{\square}{\square}",
           onTextInput: textInputHandler,
@@ -337,6 +402,13 @@ class _LatexKeyboardState extends State<LatexKeyboard> {
         ),
       ],
     ));
+  }
+
+  void change() {
+    setState(() {
+      value = "Long press on latex to preview";
+      isLong = false;
+    });
   }
 
   funcationKey() {
