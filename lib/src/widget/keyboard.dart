@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_latex/src/foundation/keyboardField.dart';
 import 'package:flutter_latex/src/widget/covert_latex.dart';
-import 'package:flutter_latex/src/widget/preview.dart';
-import 'package:flutter_latex/src/widget/view_insets.dart';
 
 class LatexKeyboard extends StatefulWidget {
   @override
@@ -372,7 +370,7 @@ class _LatexKeyboardState extends State<LatexKeyboard> {
             print(isHighLight);
           },
           KeyboardText: "/",
-          LatexText: r"\frac{\square}{\square}",
+          LatexText: r"\frac{}{}",
           onTextInput: textInputHandler,
         ),
         LatexKey(
