@@ -61,6 +61,23 @@ class Func extends StatelessWidget {
 
   var delimiter;
 
+  var aplphaC;
+
+  var x2C;
+
+  var sinC;
+
+  var fxC;
+
+  var elnxC;
+
+  var intdxC;
+
+  var matrixC;
+
+  var betaGammaC;
+
+  var delimiterC;
   Func({
     Key? key,
     required this.aplpha,
@@ -72,6 +89,15 @@ class Func extends StatelessWidget {
     required this.matrix,
     required this.betaGamma,
     required this.delimiter,
+    required this.aplphaC,
+    required this.x2C,
+    required this.sinC,
+    required this.fxC,
+    required this.elnxC,
+    required this.intdxC,
+    required this.matrixC,
+    required this.betaGammaC,
+    required this.delimiterC,
   }) : super(key: key);
 
   @override
@@ -82,42 +108,54 @@ class Func extends StatelessWidget {
           onTab: aplpha,
           KeyboardText: "abc",
           fontSize: 20,
+          color: aplphaC,
         ),
         FunctionButton(
           onTab: x2,
           KeyboardText: r"$x^2$",
           fontSize: 20,
+          color: x2C,
         ),
-        FunctionButton(onTab: sin, KeyboardText: r"$sin{x}$"),
+        FunctionButton(
+          onTab: sin,
+          KeyboardText: r"$sin{x}$",
+          color: sinC,
+        ),
         FunctionButton(
           onTab: fx,
           KeyboardText: r"$f(x)$",
-          fontSize: 20,
+          fontSize: 12,
+          color: fxC,
         ),
         FunctionButton(
           onTab: elnx,
           KeyboardText: r"$e^{\ln(x)}$",
           fontSize: 12,
+          color: elnxC,
         ),
         FunctionButton(
           onTab: intdx,
           KeyboardText: r"$\int{dx}$",
           fontSize: 12,
+          color: intdxC,
         ),
         FunctionButton(
           onTab: matrix,
           KeyboardText: r"$\begin{bmatrix}  x\\y  \end{bmatrix}$",
           fontSize: 12,
+          color: matrixC,
         ),
         FunctionButton(
           onTab: betaGamma,
           KeyboardText: r"$\alpha\beta\gamma$",
           fontSize: 12,
+          color: betaGammaC,
         ),
         FunctionButton(
           onTab: delimiter,
           KeyboardText: r"$",
           fontSize: 20,
+          color: delimiterC,
         ),
       ],
     );

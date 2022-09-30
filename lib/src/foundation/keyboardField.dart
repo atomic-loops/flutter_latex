@@ -16,7 +16,7 @@ class LatexKey extends StatelessWidget {
     this.onHightChange,
     this.fontSize = 12,
     required this.KeyboardText,
-    this.isTexOn = false,
+    this.isTexOn = true,
     // required this.LatexText,
     required this.onTextInput,
     this.flex = 1,
@@ -41,7 +41,7 @@ class LatexKey extends StatelessWidget {
               onHighlightChanged: onHightChange,
               onTap: () {
                 onTextInput.call(
-                    isTexOn ? KeyboardText.replaceAll("\$", "") : KeyboardText);
+                    isTexOn ? KeyboardText : KeyboardText.replaceAll("\$", ""));
               },
               child: Center(
                   child: CovertLatex(
@@ -105,8 +105,11 @@ class FunctionButton extends StatelessWidget {
 
   String KeyboardText;
 
+  var color;
+
   FunctionButton({
     Key? key,
+    required this.color,
     required this.onTab,
     this.fontSize,
     required this.KeyboardText,
@@ -119,7 +122,7 @@ class FunctionButton extends StatelessWidget {
           padding: EdgeInsets.all(6),
           child: Material(
             borderRadius: BorderRadius.circular(7),
-            color: Colors.grey.shade50,
+            color: color,
             child: InkWell(
               onTap: onTab,
               child: Center(

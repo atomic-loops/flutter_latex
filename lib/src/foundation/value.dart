@@ -3,11 +3,21 @@ import 'package:flutter/material.dart';
 class ChangeValue extends ChangeNotifier {
   bool isOpen = false;
   late final FocusNode node;
+  String previewString = "";
   TextEditingController controller = TextEditingController();
 
   void updateValue(bool value) {
     isOpen = value;
     notifyListeners();
+  }
+
+  previewValue(value) {
+    previewString = value;
+    // Future.delayed(const Duration(seconds: 2), () {
+    //   previewString = "";
+    // });
+    notifyListeners();
+    print(previewString);
   }
 
   void insertText(String myText) {
