@@ -4,63 +4,78 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_latex/src/foundation/keyboardField.dart';
-import 'package:flutter_latex/src/widget/covert_latex.dart';
+
+import 'package:flutter_latex/src/foundation/value.dart';
 
 class LatexKeyboard extends StatefulWidget {
   @override
   LatexKeyboard({
     Key? key,
-    required this.value,
+    // required this.value,
     required this.onTextInput,
     required this.onBackspace,
     required this.node,
+    required this.changeValue,
   }) : super(key: key);
-  final bool value;
+  // final bool value1;
   final ValueSetter<String> onTextInput;
   final VoidCallback onBackspace;
   final FocusNode node;
+  final ChangeValue changeValue;
+
   @override
   State<LatexKeyboard> createState() => _LatexKeyboardState();
 }
 
 class _LatexKeyboardState extends State<LatexKeyboard> {
+  @override
   bool isCapital = true;
+
   bool isFuncation = false;
+
   void textInputHandler(String text) => widget.onTextInput.call(text);
 
   void backspaceHandler() => widget.onBackspace.call();
+
   String value = "Long press on latex to preview";
+
   bool isHighLight = false;
+
   bool isLong = false;
+
   Widget build(BuildContext context) {
     return AnimatedContainer(
-        height: widget.value ? 320 : 0,
-        duration: Duration(milliseconds: 200),
-        color: widget.value ? Colors.grey.shade200 : Colors.transparent,
+        height: widget.changeValue.isOpen == true ? 320 : 0,
+        duration: const Duration(milliseconds: 200),
+        color: widget.changeValue.isOpen == true
+            ? Colors.grey.shade200
+            : Colors.transparent,
         child: SafeArea(
           top: false,
-          child: widget.value
+          child: widget.changeValue.isOpen == true
               ? isFuncation
                   ? Column(
                       // mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Expanded(
-                          flex: 2,
-                          child: Padding(
-                            padding: const EdgeInsets.all(6.0),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Material(
-                                color: widget.value
-                                    ? Colors.grey.shade200
-                                    : Colors.transparent,
-                                child: CovertLatex(
-                                  laTeXCode: Text(value),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                        // Expanded(child: Func()),
+                        // Expanded(
+                        //   flex: 2,
+                        //   child: Padding(
+                        //     padding: const EdgeInsets.all(6.0),
+                        //     child: Align(
+                        //       alignment: Alignment.centerLeft,
+                        //       child: Material(
+                        //         color: widget.changeValue.isOpen
+                        //             ? Colors.grey.shade200
+                        //             : Colors.transparent,
+                        //         child: CovertLatex(
+                        //           laTeXCode: Text(value),
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
+                        // Expanded(child: ),
                         number(),
                         latexkey1(),
                         latexkey1(),
@@ -71,23 +86,24 @@ class _LatexKeyboardState extends State<LatexKeyboard> {
                   : Column(
                       // mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Expanded(
-                          flex: 2,
-                          child: Padding(
-                            padding: const EdgeInsets.all(6.0),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Material(
-                                color: widget.value
-                                    ? Colors.grey.shade200
-                                    : Colors.transparent,
-                                child: CovertLatex(
-                                  laTeXCode: Text(value),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                        // Expanded(
+                        //   flex: 2,
+                        //   child: Padding(
+                        //     padding: const EdgeInsets.all(6.0),
+                        //     child: Align(
+                        //       alignment: Alignment.centerLeft,
+                        //       child: Material(
+                        //         color: widget.changeValue.isOpen
+                        //             ? Colors.grey.shade200
+                        //             : Colors.transparent,
+                        //         child: CovertLatex(
+                        //           laTeXCode: Text(value),
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
+                        // Expanded(child: Func()),
                         number(),
                         alpha1(),
                         alpha2(),
@@ -97,6 +113,19 @@ class _LatexKeyboardState extends State<LatexKeyboard> {
                     )
               : Container(),
         ));
+    ;
+  }
+
+  alphaKeyboard() {
+    return Column(
+      children: [
+        number(),
+        alpha1(),
+        alpha2(),
+        alpha3(),
+        funcationKey(),
+      ],
+    );
   }
 
   Expanded number() {
@@ -107,52 +136,52 @@ class _LatexKeyboardState extends State<LatexKeyboard> {
           // onLongPress: () {},
 
           KeyboardText: "1",
-          LatexText: "1",
+          // LatexText: "1",
           onTextInput: textInputHandler,
         ),
         LatexKey(
           KeyboardText: "2",
-          LatexText: "2",
+          // LatexText: "2",
           onTextInput: textInputHandler,
         ),
         LatexKey(
           KeyboardText: "3",
-          LatexText: "3",
+          // LatexText: "3",
           onTextInput: textInputHandler,
         ),
         LatexKey(
           KeyboardText: "4",
-          LatexText: "4",
+          // LatexText: "4",
           onTextInput: textInputHandler,
         ),
         LatexKey(
           KeyboardText: "5",
-          LatexText: "5",
+          // LatexText: "5",
           onTextInput: textInputHandler,
         ),
         LatexKey(
           KeyboardText: "6",
-          LatexText: "6",
+          // LatexText: "6",
           onTextInput: textInputHandler,
         ),
         LatexKey(
           KeyboardText: "7",
-          LatexText: "7",
+          // LatexText: "7",
           onTextInput: textInputHandler,
         ),
         LatexKey(
           KeyboardText: "8",
-          LatexText: "8",
+          // LatexText: "8",
           onTextInput: textInputHandler,
         ),
         LatexKey(
           KeyboardText: "9",
-          LatexText: "9",
+          // LatexText: "9",
           onTextInput: textInputHandler,
         ),
         LatexKey(
           KeyboardText: "0",
-          LatexText: "0",
+          // LatexText: "0",
           onTextInput: textInputHandler,
         ),
       ],
@@ -165,52 +194,52 @@ class _LatexKeyboardState extends State<LatexKeyboard> {
       children: [
         LatexKey(
           KeyboardText: isCapital ? "Q" : "q",
-          LatexText: isCapital ? "Q" : "q",
+          // LatexText: isCapital ? "Q" : "q",
           onTextInput: textInputHandler,
         ),
         LatexKey(
           KeyboardText: isCapital ? "W" : "w",
-          LatexText: isCapital ? "W" : "w",
+          // LatexText: isCapital ? "W" : "w",
           onTextInput: textInputHandler,
         ),
         LatexKey(
           KeyboardText: isCapital ? "E" : "e",
-          LatexText: isCapital ? "E" : "e",
+          // LatexText: isCapital ? "E" : "e",
           onTextInput: textInputHandler,
         ),
         LatexKey(
           KeyboardText: isCapital ? "R" : "r",
-          LatexText: isCapital ? "R" : "r",
+          // LatexText: isCapital ? "R" : "r",
           onTextInput: textInputHandler,
         ),
         LatexKey(
           KeyboardText: isCapital ? "T" : "t",
-          LatexText: isCapital ? "T" : "t",
+          //  LatexText: isCapital ? "T" : "t",
           onTextInput: textInputHandler,
         ),
         LatexKey(
           KeyboardText: isCapital ? "Y" : "y",
-          LatexText: isCapital ? "Y" : "y",
+          // LatexText: isCapital ? "Y" : "y",
           onTextInput: textInputHandler,
         ),
         LatexKey(
           KeyboardText: isCapital ? "U" : "u",
-          LatexText: isCapital ? "U" : "u",
+          // LatexText: isCapital ? "U" : "u",
           onTextInput: textInputHandler,
         ),
         LatexKey(
           KeyboardText: isCapital ? "I" : "i",
-          LatexText: isCapital ? "I" : "i",
+          // LatexText: isCapital ? "I" : "i",
           onTextInput: textInputHandler,
         ),
         LatexKey(
           KeyboardText: isCapital ? "O" : "o",
-          LatexText: isCapital ? "O" : "o",
+          // LatexText: isCapital ? "O" : "o",
           onTextInput: textInputHandler,
         ),
         LatexKey(
           KeyboardText: isCapital ? "P" : "p",
-          LatexText: isCapital ? "P" : "p",
+          // /  LatexText: isCapital ? "P" : "p",
           onTextInput: textInputHandler,
         ),
       ],
@@ -227,44 +256,44 @@ class _LatexKeyboardState extends State<LatexKeyboard> {
           iconsColors: isCapital ? Colors.blue : Colors.black,
           icon: Icons.upgrade,
           tap: () {
-            setState(() {
-              isCapital = !isCapital;
-            });
+            // setState(() {
+            isCapital = !isCapital;
+            // });
           },
         ),
         LatexKey(
           KeyboardText: isCapital ? "Z" : "z",
-          LatexText: isCapital ? "Z" : "z",
+          // LatexText: isCapital ? "Z" : "z",
           onTextInput: textInputHandler,
         ),
         LatexKey(
           KeyboardText: isCapital ? "X" : "x",
-          LatexText: isCapital ? "X" : "x",
+          // LatexText: isCapital ? "X" : "x",
           onTextInput: textInputHandler,
         ),
         LatexKey(
           KeyboardText: isCapital ? "C" : "c",
-          LatexText: isCapital ? "C" : "c",
+          // LatexText: isCapital ? "C" : "c",
           onTextInput: textInputHandler,
         ),
         LatexKey(
           KeyboardText: isCapital ? "V" : "v",
-          LatexText: isCapital ? "V" : "v",
+          // LatexText: isCapital ? "V" : "v",
           onTextInput: textInputHandler,
         ),
         LatexKey(
           KeyboardText: isCapital ? "B" : "b",
-          LatexText: isCapital ? "B" : "b",
+          // LatexText: isCapital ? "B" : "b",
           onTextInput: textInputHandler,
         ),
         LatexKey(
           KeyboardText: isCapital ? "N" : "n",
-          LatexText: isCapital ? "N" : "n",
+          // LatexText: isCapital ? "N" : "n",
           onTextInput: textInputHandler,
         ),
         LatexKey(
           KeyboardText: isCapital ? "M" : "m",
-          LatexText: isCapital ? "M" : "m",
+          // LatexText: isCapital ? "M" : "m",
           onTextInput: textInputHandler,
         ),
         ButtonKey(
@@ -288,47 +317,47 @@ class _LatexKeyboardState extends State<LatexKeyboard> {
         children: [
           LatexKey(
             KeyboardText: isCapital ? "A" : "a",
-            LatexText: isCapital ? "A" : "a",
+            // LatexText: isCapital ? "A" : "a",
             onTextInput: textInputHandler,
           ),
           LatexKey(
             KeyboardText: isCapital ? "S" : "s",
-            LatexText: isCapital ? "S" : "s",
+            // LatexText: isCapital ? "S" : "s",
             onTextInput: textInputHandler,
           ),
           LatexKey(
             KeyboardText: isCapital ? "D" : "d",
-            LatexText: isCapital ? "D" : "d",
+            // LatexText: isCapital ? "D" : "d",
             onTextInput: textInputHandler,
           ),
           LatexKey(
             KeyboardText: isCapital ? "F" : "f",
-            LatexText: isCapital ? "F" : "f",
+            // LatexText: isCapital ? "F" : "f",
             onTextInput: textInputHandler,
           ),
           LatexKey(
             KeyboardText: isCapital ? "G" : "g",
-            LatexText: isCapital ? "G" : "g",
+            // LatexText: isCapital ? "G" : "g",
             onTextInput: textInputHandler,
           ),
           LatexKey(
             KeyboardText: isCapital ? "H" : "h",
-            LatexText: isCapital ? "H" : "h",
+            //  LatexText: isCapital ? "H" : "h",
             onTextInput: textInputHandler,
           ),
           LatexKey(
             KeyboardText: isCapital ? "J" : "j",
-            LatexText: isCapital ? "J" : "j",
+            // LatexText: isCapital ? "J" : "j",
             onTextInput: textInputHandler,
           ),
           LatexKey(
             KeyboardText: isCapital ? "K" : "k",
-            LatexText: isCapital ? "K" : "k",
+            // LatexText: isCapital ? "K" : "k",
             onTextInput: textInputHandler,
           ),
           LatexKey(
             KeyboardText: isCapital ? "L" : "l",
-            LatexText: isCapital ? "L" : "l",
+            // LatexText: isCapital ? "L" : "l",
             onTextInput: textInputHandler,
           ),
         ],
@@ -342,7 +371,7 @@ class _LatexKeyboardState extends State<LatexKeyboard> {
       children: [
         LatexKey(
           KeyboardText: "start",
-          LatexText: r"$",
+          // LatexText: r"$",
           onTextInput: textInputHandler,
         ),
         LatexKey(
@@ -364,38 +393,66 @@ class _LatexKeyboardState extends State<LatexKeyboard> {
                 change();
               });
             }
+            // else {
+            // Timer(Duration(seconds: 1), change());
+            // }
+            print(isHighLight);
+          },
+          fontSize: 12,
+          KeyboardText: r"$\frac{\square}{\square}$",
+          // LatexText: r"\frac{}{}",
+          onTextInput: textInputHandler,
+        ),
+        LatexKey(
+          fontSize: 20,
+          KeyboardText: r"$\pi$",
+          // LatexText: r"\pi",
+          onTextInput: textInputHandler,
+        ),
+        LatexKey(
+          fontSize: 20,
+          KeyboardText: r"$\theta$",
+          // LatexText: r"\theta",
+          onTextInput: textInputHandler,
+        ),
+        LatexKey(
+          fontSize: 20,
+          KeyboardText: r"$\alpha$",
+          // LatexText: r"\alpha",
+          onTextInput: textInputHandler,
+        ),
+        LatexKey(
+          onLongPress: () {
+            setState(() {
+              isLong = true;
+            });
+          },
+          onHightChange: (v) {
+            setState(() {
+              isHighLight = v;
+            });
+            if (isHighLight == true) {
+              setState(() {
+                value = r"\sqrt[1]{2} $\rightarrow$ $\sqrt[1]{2}$";
+              });
+            } else {
+              Future.delayed(const Duration(seconds: 2), () {
+                change();
+              });
+            }
             //else {
             //   Timer(Duration(seconds: 1), change());
             // }
             print(isHighLight);
           },
-          KeyboardText: "/",
-          LatexText: r"\frac{}{}",
+          fontSize: 12,
+          KeyboardText: r"$\sqrt[\square]{\square}$",
+          // LatexText: r"\sqrt[\square]{\square}",
           onTextInput: textInputHandler,
         ),
         LatexKey(
-          KeyboardText: "π",
-          LatexText: r"\pi",
-          onTextInput: textInputHandler,
-        ),
-        LatexKey(
-          KeyboardText: "θ",
-          LatexText: r"\theta",
-          onTextInput: textInputHandler,
-        ),
-        LatexKey(
-          KeyboardText: "α",
-          LatexText: r"\alpha",
-          onTextInput: textInputHandler,
-        ),
-        LatexKey(
-          KeyboardText: "√",
-          LatexText: r"\sqrt[\square]{\square}",
-          onTextInput: textInputHandler,
-        ),
-        LatexKey(
-          KeyboardText: "end",
-          LatexText: r"$",
+          KeyboardText: r"$\Box$",
+          // LatexText: r"\Box",
           onTextInput: textInputHandler,
         ),
       ],
@@ -413,17 +470,22 @@ class _LatexKeyboardState extends State<LatexKeyboard> {
     return Expanded(
         child: Row(
       children: [
-        ButtonKey(
-          color: Colors.white,
-          flex: 2,
-          iconsColors: Colors.black,
-          icon: Icons.functions,
-          tap: () {
-            setState(() {
-              isFuncation = !isFuncation;
-            });
-          },
+        LatexKey(
+          KeyboardText: r".",
+          // LatexText: r"\Box",
+          onTextInput: textInputHandler,
         ),
+        // ButtonKey(
+        //   color: Colors.white,
+        //   flex: 2,
+        //   iconsColors: Colors.black,
+        //   icon: Icons.functions,
+        //   tap: () {
+        //     setState(() {
+        //       isFuncation = !isFuncation;
+        //     });
+        //   },
+        // ),
         ButtonKey(
           color: Colors.white,
           flex: 5,
@@ -435,6 +497,7 @@ class _LatexKeyboardState extends State<LatexKeyboard> {
         ButtonKey(
           color: Colors.white,
           flex: 2,
+          // onLongPress: () {},
           icon: Icons.backspace,
           tap: () {
             widget.onBackspace.call();
@@ -445,45 +508,15 @@ class _LatexKeyboardState extends State<LatexKeyboard> {
   }
 }
 
-class ButtonKey extends StatelessWidget {
-  final IconData? icon;
-
-  var color;
-
-  var iconsColors;
-
-  ButtonKey({
+class Body extends StatelessWidget {
+  const Body({
     Key? key,
-    this.icon,
-    required this.color,
-    this.iconsColors,
-    this.flex = 1,
-    this.tap,
+    required this.changeValue,
   }) : super(key: key);
-
-  final tap;
-  final int flex;
+  final ChangeValue changeValue;
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      flex: flex,
-      child: Padding(
-        padding: const EdgeInsets.all(4.0),
-        child: Material(
-          color: color,
-          child: InkWell(
-            onTap: tap,
-            child: Center(
-                child: icon == null
-                    ? Container()
-                    : Icon(
-                        icon,
-                        color: iconsColors,
-                      )),
-          ),
-        ),
-      ),
-    );
+    return Container();
   }
 }

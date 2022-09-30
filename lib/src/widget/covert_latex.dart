@@ -7,11 +7,14 @@ class CovertLatex extends StatefulWidget {
   const CovertLatex({
     Key? key,
     required this.laTeXCode,
+    this.textStyle,
     this.delimiter = r'$',
     this.displayDelimiter = r'$$',
   }) : super(key: key);
   // a Text used for the rendered code as well as for the style
   final Text laTeXCode;
+
+  final TextStyle? textStyle;
 
   // The delimiter to be used for inline LaTeX
   final String delimiter;
@@ -60,9 +63,11 @@ class _CovertLatexState extends State<CovertLatex> {
             alignment: PlaceholderAlignment.middle,
             child: Math.tex(
               laTeXMatch.group(3)!.trim(),
-              textStyle: TextStyle(
-                  color: Colors.black,
-                  fontSize: laTeXMatch.group(3)!.length > 90 ? 12 : 20),
+              textStyle: widget.textStyle == null
+                  ? TextStyle(
+                      // color: Colors.black,
+                      fontSize: laTeXMatch.group(3)!.length > 90 ? 12 : 20)
+                  : widget.textStyle,
             )));
       } else {
         textBlocks.addAll([
