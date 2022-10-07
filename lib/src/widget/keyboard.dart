@@ -515,7 +515,7 @@ class _BodyState extends State<Body> {
             KeyboardText: r"$\begin{bmatrix}\Box&\Box\\\Box&\Box\end{bmatrix}$",
             onTextInput: textInputHandler,
             isTexOn: widget.idTexOn,
-            fontSize: 8,
+            fontSize: 6,
           ),
           LatexKey(
             onLongPress: () {
@@ -545,7 +545,7 @@ class _BodyState extends State<Body> {
             KeyboardText: r"$\begin{bmatrix}\Box&\Box\end{bmatrix}$",
             onTextInput: textInputHandler,
             isTexOn: widget.idTexOn,
-            fontSize: 8,
+            fontSize: 6,
           ),
           LatexKey(
             // else {
@@ -669,7 +669,7 @@ class _BodyState extends State<Body> {
               if (isHighLight == true) {
                 setState(() {
                   widget.changeValue.previewValue(
-                      r"\begin{bmatrix}6&7\\8&9\end{bmatrix} $\rightarrow$ $\begin{bmatrix}6&7\\8&9\end{bmatrix}$");
+                      r"\begin{bmatrix}1&2&3\\4&5&6\\7&8&9\end{bmatrix} $\rightarrow$ $\begin{bmatrix}1&2&3\\4&5&6\\7&8&9\end{bmatrix}$");
                 });
               } else {
                 Future.delayed(const Duration(seconds: 2), () {
@@ -681,10 +681,11 @@ class _BodyState extends State<Body> {
               // }
               print(isHighLight);
             },
-            KeyboardText: r"$\begin{bmatrix}\Box&\Box\\\Box&\Box\end{bmatrix}$",
+            KeyboardText:
+                r"$\begin{bmatrix}\Box&\Box&\Box\\\Box&\Box&\Box\\\Box&\Box&\Box\end{bmatrix}$",
             onTextInput: textInputHandler,
             isTexOn: widget.idTexOn,
-            fontSize: 8,
+            fontSize: 4,
           ),
           LatexKey(
             onLongPress: () {
@@ -714,7 +715,7 @@ class _BodyState extends State<Body> {
             KeyboardText: r"$\begin{bmatrix}\Box&\Box&\Box\end{bmatrix}$",
             onTextInput: textInputHandler,
             isTexOn: widget.idTexOn,
-            fontSize: 6,
+            fontSize: 5,
           ),
           LatexKey(
             onLongPress: () {
@@ -819,7 +820,7 @@ class _BodyState extends State<Body> {
             KeyboardText: r"$A^{-1}$",
             onTextInput: textInputHandler,
             isTexOn: widget.idTexOn,
-            fontSize: 17,
+            fontSize: 10,
           ),
           LatexKey(
             onLongPress: () {
@@ -849,13 +850,13 @@ class _BodyState extends State<Body> {
             KeyboardText: r"$A_{\Box\times\Box}$",
             onTextInput: textInputHandler,
             isTexOn: widget.idTexOn,
-            fontSize: 12,
+            fontSize: 10,
           ),
           LatexKey(
             KeyboardText: r"$\text{adj}$",
             onTextInput: textInputHandler,
             isTexOn: widget.idTexOn,
-            fontSize: 20,
+            fontSize: 15,
           ),
           LatexKey(
             onLongPress: () {
@@ -886,7 +887,7 @@ class _BodyState extends State<Body> {
                 r"$\begin{vmatrix}\Box&\Box&\Box\\\Box&\Box&\Box\\\Box&\Box&\Box\end{vmatrix}$",
             onTextInput: textInputHandler,
             isTexOn: widget.idTexOn,
-            fontSize: 6,
+            fontSize: 5,
           ),
           LatexKey(
             onLongPress: () {
@@ -1916,7 +1917,7 @@ class _BodyState extends State<Body> {
             KeyboardText: r"$f(x)$",
             onTextInput: textInputHandler,
             isTexOn: widget.idTexOn,
-            fontSize: 15,
+            fontSize: 12,
           ),
           LatexKey(
             onLongPress: () {
@@ -2434,7 +2435,7 @@ class _BodyState extends State<Body> {
             KeyboardText: r"$f(x)$",
             onTextInput: textInputHandler,
             isTexOn: widget.idTexOn,
-            fontSize: 15,
+            fontSize: 12,
           ),
           LatexKey(
             onLongPress: () {

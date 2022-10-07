@@ -107,7 +107,7 @@ class Func extends StatelessWidget {
         FunctionButton(
           onTab: aplpha,
           KeyboardText: "abc",
-          fontSize: 20,
+          fontSize: 12,
           color: aplphaC,
         ),
         FunctionButton(
