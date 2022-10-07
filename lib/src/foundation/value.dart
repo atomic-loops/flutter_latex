@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ChangeValue extends ChangeNotifier {
   bool isOpen = false;
   late final FocusNode node;
-  String previewString = "";
+  String previewString = "Long press on latex to preview";
   TextEditingController controller = TextEditingController();
 
   void updateValue(bool value) {

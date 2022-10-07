@@ -237,7 +237,8 @@ class _LatexKeyboardState extends State<LatexKeyboard> {
                       node: widget.node,
 
                       alpha: aplpha, x2: x2, changeValue: widget.changeValue,
-                      idTexOn: delimiter,
+                      idTexOn: delimiter, fx: fx, sinx: sin, elnx: elnx,
+                      intdx: intdx, matrix: matrix,
 
                       // changeValue: widget.changeValue
                     ),
@@ -318,17 +319,27 @@ class Body extends StatefulWidget {
       required this.onTextInput,
       required this.onBackspace,
       required this.node,
+      required this.fx,
       this.idTexOn = true,
-      this.alpha = true,
-      this.x2 = false})
+      required this.alpha,
+      required this.sinx,
+      required this.elnx,
+      required this.intdx,
+      required this.matrix,
+      required this.x2})
       : super(key: key);
   final ChangeValue changeValue;
   final ValueSetter<String> onTextInput;
   final VoidCallback onBackspace;
   final FocusNode node;
   bool idTexOn;
-  bool alpha = true;
-  bool x2 = false;
+  bool alpha;
+  bool sinx;
+  bool x2;
+  bool fx;
+  bool elnx;
+  bool intdx;
+  bool matrix;
 
   @override
   State<Body> createState() => _BodyState();
@@ -352,7 +363,21 @@ class _BodyState extends State<Body> {
         child: Expanded(
           child: Column(
             children: [
-              if (widget.alpha == true) ...[alphaKeyboard()] else ...[x2()]
+              if (widget.alpha == true) ...[
+                alphaKeyboard()
+              ] else if (widget.x2 == true) ...[
+                x2()
+              ] else if (widget.sinx == true) ...[
+                sinX()
+              ] else if (widget.fx == true) ...[
+                fx()
+              ] else if (widget.elnx == true) ...[
+                enlx()
+              ] else if (widget.intdx == true) ...[
+                intdx()
+              ] else if (widget.matrix == true) ...[
+                matrix()
+              ]
             ],
           ),
         ),
@@ -378,11 +403,3051 @@ class _BodyState extends State<Body> {
     return Expanded(
       child: Column(
         children: [
-          number(),
-          latexkey1(),
-          latexkey1(),
-          latexkey1(),
-          funcationKey(),
+          x21(),
+          x22(),
+          x23(),
+          x24(),
+          commomRow(),
+          // funcationKey(),
+        ],
+      ),
+    );
+  }
+
+  sinX() {
+    return Expanded(
+        child: Column(
+      children: [sinX1(), sinX2(), sinX3(), sinX4(), commomRow()],
+    ));
+  }
+
+  fx() {
+    return Expanded(
+      child: Column(
+        children: [fx1(), fx2(), fx3(), fx4(), commomRow()],
+      ),
+    );
+  }
+
+  enlx() {
+    return Expanded(
+      child: Column(
+        children: [enlx1(), enlx2(), enlx3(), enlx4(), commomRow()],
+      ),
+    );
+  }
+
+  intdx() {
+    return Expanded(
+      child: Column(
+        children: [intdx1(), intdx2(), intdx3(), enlx4(), commomRow()],
+      ),
+    );
+  }
+
+  matrix() {
+    return Expanded(
+      child: Column(
+        children: [matrix1(), matrix2(), matrix3(), matrix4(), commomRow()],
+      ),
+    );
+  }
+
+  matrix1() {
+    return Expanded(
+      child: Row(
+        children: [
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue.previewValue(
+                      r"\begin{bmatrix}1\\2\end{bmatrix} $\rightarrow$ $\begin{bmatrix}1\\2\end{bmatrix}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"$\begin{bmatrix}\Box\\\Box\end{bmatrix}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 10,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue.previewValue(
+                      r"\begin{bmatrix}6&7\\8&9\end{bmatrix} $\rightarrow$ $\begin{bmatrix}6&7\\8&9\end{bmatrix}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"$\begin{bmatrix}\Box&\Box\\\Box&\Box\end{bmatrix}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 8,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue.previewValue(
+                      r"\begin{bmatrix}1&2\end{bmatrix} $\rightarrow$ $\begin{bmatrix}1&2\end{bmatrix}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"$\begin{bmatrix}\Box&\Box\end{bmatrix}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 8,
+          ),
+          LatexKey(
+            // else {
+            // Timer(Duration(seconds: 1), change());
+            // }
+
+            KeyboardText: r"$\det$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 15,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue
+                      .previewValue(r"{1}^{2} $\rightarrow$ ${1}^{2}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"${\Box}^{\Box}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 15,
+          ),
+          LatexKey(
+            KeyboardText: r"$7$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$8$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$9$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$($",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$)$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+        ],
+      ),
+    );
+  }
+
+  matrix2() {
+    return Expanded(
+      child: Row(
+        children: [
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue.previewValue(
+                      r"\begin{bmatrix}7\\8\\9\end{bmatrix} $\rightarrow$ $\begin{bmatrix}7\\8\\9\end{bmatrix}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"$\begin{bmatrix}\Box\\\Box\\\Box\end{bmatrix}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 6,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue.previewValue(
+                      r"\begin{bmatrix}6&7\\8&9\end{bmatrix} $\rightarrow$ $\begin{bmatrix}6&7\\8&9\end{bmatrix}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"$\begin{bmatrix}\Box&\Box\\\Box&\Box\end{bmatrix}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 8,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue.previewValue(
+                      r"\begin{bmatrix}7&8&9\end{bmatrix} $\begin{bmatrix}7&8&9\end{bmatrix}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"$\begin{bmatrix}\Box&\Box&\Box\end{bmatrix}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 6,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue.previewValue(
+                      r"\begin{vmatrix}7&8\\9&0\end{vmatrix} $\rightarrow$ $\begin{vmatrix}7&8\\9&0\end{vmatrix}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"$\begin{vmatrix}\Box&\Box\\\Box&\Box\end{vmatrix}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 8,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue
+                      .previewValue(r"\sqrt[1]{2} $\rightarrow$ $\sqrt[1]{2}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"$\sqrt[\Box]{\Box}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 15,
+          ),
+          LatexKey(
+            KeyboardText: r"$4$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$5$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$6$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$\times$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$\div$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+        ],
+      ),
+    );
+  }
+
+  matrix3() {
+    return Expanded(
+      child: Row(
+        children: [
+          LatexKey(
+            KeyboardText: r"$A^{-1}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 17,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue.previewValue(
+                      r"A_{1\times2} $\rightarrow$ $A_{1\times2}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"$A_{\Box\times\Box}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 12,
+          ),
+          LatexKey(
+            KeyboardText: r"$\text{adj}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue.previewValue(
+                      r"\begin{vmatrix}2&3&4\\5&6&7\\8&9&0\end{vmatrix} $\rightarrow$ $\begin{vmatrix}2&3&4\\5&6&7\\8&9&0\end{vmatrix}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText:
+                r"$\begin{vmatrix}\Box&\Box&\Box\\\Box&\Box&\Box\\\Box&\Box&\Box\end{vmatrix}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 6,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue
+                      .previewValue(r"\frac{1}{2} $\rightarrow$ $\frac{1}{2}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"$\frac{\Box}{\Box}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 12,
+          ),
+          LatexKey(
+            KeyboardText: r"$1$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$2$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$3$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$+$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$-$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+        ],
+      ),
+    );
+  }
+
+  matrix4() {
+    return Expanded(
+      child: Row(
+        children: [
+          LatexKey(
+            KeyboardText: r"$\mathrm{A}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$\mathrm{B}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$\mathrm{I}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            //else {
+            //   Timer(Duration(seconds: 1), change());
+            // }
+
+            KeyboardText: r"$\mathrm{X}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$\cdot$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$0$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$.$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$\ne$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$=$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          ButtonKey(
+            color: Colors.grey,
+
+            // onLongPress: () {},
+            icon: Icons.backspace,
+            tap: () {
+              widget.onBackspace.call();
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  intdx1() {
+    return Expanded(
+      child: Row(
+        children: [
+          LatexKey(
+            KeyboardText: r"$\int$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 10,
+          ),
+          LatexKey(
+            KeyboardText: r"$dx$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 17,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue.previewValue(
+                      r"\lim\limits_{1\to5}{8} $\rightarrow$ $\lim\limits_{1\to5}{8}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"$\lim\limits_{\Box\to\Box}{\Box}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 10,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue
+                      .previewValue(r"{1}_{2} $\rightarrow$ ${1}_{2}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"${\Box}_{\Box}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 15,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue
+                      .previewValue(r"{1}^{2} $\rightarrow$ ${1}^{2}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"${\Box}^{\Box}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 15,
+          ),
+          LatexKey(
+            KeyboardText: r"$7$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$8$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$9$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$($",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$)$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+        ],
+      ),
+    );
+  }
+
+  intdx2() {
+    return Expanded(
+      child: Row(
+        children: [
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue.previewValue(
+                      r"\int\limits_{a}^{b}{abdx} $\rightarrow$ $\int\limits_{a}^{b}{abdx}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"$\int\limits_{\Box}^{\Box}{\Box}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 6,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue.previewValue(
+                      r"\frac{d}{dx}(2x^2) $\rightarrow$ $\frac{d}{dx}(2x^2)$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"$\frac{d}{dx}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 12,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue.previewValue(
+                      r"\frac{d^{2}}{dx^{2}} $\frac{d^{2}}{dx^{2}}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"$\frac{d^{\Box}}{dx^{\Box}}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 12,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue.previewValue(
+                      r"\sum\limits_{n=1}^{0} $\rightarrow$ $\sum\limits_{n=1}^{0}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"$\sum\limits_{\Box}^{\Box}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 8,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue
+                      .previewValue(r"\sqrt[1]{2} $\rightarrow$ $\sqrt[1]{2}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"$\sqrt[\Box]{\Box}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 15,
+          ),
+          LatexKey(
+            KeyboardText: r"$4$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$5$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$6$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$\times$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$\div$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+        ],
+      ),
+    );
+  }
+
+  intdx3() {
+    return Expanded(
+      child: Row(
+        children: [
+          LatexKey(
+            KeyboardText: r"$|$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 17,
+          ),
+          LatexKey(
+            KeyboardText: r"$,$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 17,
+          ),
+          LatexKey(
+            KeyboardText: r"$;$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$'$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue
+                      .previewValue(r"\frac{1}{2} $\rightarrow$ $\frac{1}{2}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"$\frac{\Box}{\Box}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 12,
+          ),
+          LatexKey(
+            KeyboardText: r"$1$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$2$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$3$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$+$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$-$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+        ],
+      ),
+    );
+  }
+
+  enlx1() {
+    return Expanded(
+      child: Row(children: [
+        LatexKey(
+          KeyboardText: r"$\log$",
+          onTextInput: textInputHandler,
+          isTexOn: widget.idTexOn,
+          fontSize: 15,
+        ),
+        LatexKey(
+          KeyboardText: r"$e$",
+          onTextInput: textInputHandler,
+          isTexOn: widget.idTexOn,
+          fontSize: 17,
+        ),
+        LatexKey(
+          KeyboardText: r"$\ln$",
+          onTextInput: textInputHandler,
+          isTexOn: widget.idTexOn,
+          fontSize: 15,
+        ),
+        LatexKey(
+          onLongPress: () {
+            setState(() {
+              isLong = true;
+            });
+          },
+          onHightChange: (v) {
+            setState(() {
+              isHighLight = v;
+            });
+            if (isHighLight == true) {
+              setState(() {
+                widget.changeValue
+                    .previewValue(r"10^{12} $\rightarrow$ $10^{12}$");
+              });
+            } else {
+              Future.delayed(const Duration(seconds: 2), () {
+                change();
+              });
+            }
+            // else {
+            // Timer(Duration(seconds: 1), change());
+            // }
+            print(isHighLight);
+          },
+          KeyboardText: r"$10^{\Box}$",
+          onTextInput: textInputHandler,
+          isTexOn: widget.idTexOn,
+          fontSize: 15,
+        ),
+        LatexKey(
+          onLongPress: () {
+            setState(() {
+              isLong = true;
+            });
+          },
+          onHightChange: (v) {
+            setState(() {
+              isHighLight = v;
+            });
+            if (isHighLight == true) {
+              setState(() {
+                widget.changeValue
+                    .previewValue(r"{1}^{2} $\rightarrow$ ${1}^{2}$");
+              });
+            } else {
+              Future.delayed(const Duration(seconds: 2), () {
+                change();
+              });
+            }
+            // else {
+            // Timer(Duration(seconds: 1), change());
+            // }
+            print(isHighLight);
+          },
+          KeyboardText: r"${\Box}^{\Box}$",
+          onTextInput: textInputHandler,
+          isTexOn: widget.idTexOn,
+          fontSize: 15,
+        ),
+        LatexKey(
+          KeyboardText: r"$7$",
+          onTextInput: textInputHandler,
+          isTexOn: widget.idTexOn,
+          fontSize: 20,
+        ),
+        LatexKey(
+          KeyboardText: r"$8$",
+          onTextInput: textInputHandler,
+          isTexOn: widget.idTexOn,
+          fontSize: 20,
+        ),
+        LatexKey(
+          KeyboardText: r"$9$",
+          onTextInput: textInputHandler,
+          isTexOn: widget.idTexOn,
+          fontSize: 20,
+        ),
+        LatexKey(
+          KeyboardText: r"$($",
+          onTextInput: textInputHandler,
+          isTexOn: widget.idTexOn,
+          fontSize: 20,
+        ),
+        LatexKey(
+          KeyboardText: r"$)$",
+          onTextInput: textInputHandler,
+          isTexOn: widget.idTexOn,
+          fontSize: 20,
+        ),
+      ]),
+    );
+  }
+
+  enlx2() {
+    return Expanded(
+      child: Row(
+        children: [
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue
+                      .previewValue(r"\log_{1}{2} $\rightarrow$ $\log_{1}{2}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"$\log_{\Box}{\Box}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 9,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue
+                      .previewValue(r"e^{a+b} $\rightarrow$ $e^{a+b}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"$e^{\Box}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 17,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue
+                      .previewValue(r"\ln(2x) $\rightarrow$ $\ln(2x)$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"$\ln()$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 12,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue
+                      .previewValue(r"\sqrt{2} $\rightarrow$ $\sqrt{2}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"$\sqrt{\Box}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 15,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue
+                      .previewValue(r"\sqrt[1]{2} $\rightarrow$ $\sqrt[1]{2}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"$\sqrt[\Box]{\Box}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 15,
+          ),
+          LatexKey(
+            KeyboardText: r"$4$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$5$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$6$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$\times$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$\div$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+        ],
+      ),
+    );
+  }
+
+  enlx3() {
+    return Expanded(
+      child: Row(
+        children: [
+          LatexKey(
+            KeyboardText: r"$|$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 17,
+          ),
+          LatexKey(
+            KeyboardText: r"$\{$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 17,
+          ),
+          LatexKey(
+            KeyboardText: r"$\}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue
+                      .previewValue(r"{a}_{b} $\rightarrow$ ${a}_{b}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"${\Box}_{\Box}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 15,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue
+                      .previewValue(r"\frac{1}{2} $\rightarrow$ $\frac{1}{2}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"$\frac{\Box}{\Box}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 12,
+          ),
+          LatexKey(
+            KeyboardText: r"$1$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$2$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$3$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$+$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$-$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+        ],
+      ),
+    );
+  }
+
+  enlx4() {
+    return Expanded(
+      child: Row(
+        children: [
+          LatexKey(
+            KeyboardText: r"$\in$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$\infty$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue.previewValue(r"f(x) $\rightarrow$ $f(x)$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              //else {
+              //   Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"$f(x)$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 15,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue
+                      .previewValue(r"f^{a}(b) $\rightarrow$ $f^{a}(b)$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              //else {
+              //   Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"$f^{\Box}(\Box)$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 10,
+          ),
+          LatexKey(
+            KeyboardText: r"$\cdot$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$0$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$.$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$\ne$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$=$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          ButtonKey(
+            color: Colors.grey,
+
+            // onLongPress: () {},
+            icon: Icons.backspace,
+            tap: () {
+              widget.onBackspace.call();
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  fx1() {
+    return Expanded(
+      child: Row(
+        children: [
+          LatexKey(
+            KeyboardText: r"$\{$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 17,
+          ),
+          LatexKey(
+            KeyboardText: r"$\}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 17,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue.previewValue(
+                      r"\begin{cases}{a} \\ {b} \end{cases} $\rightarrow$ $\begin{cases}{a} \\ {b} \end{cases}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"$\begin{cases}{\Box} \\ {\Box} \end{cases}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 10,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue
+                      .previewValue(r"{a}_{b} $\rightarrow$ ${a}_{b}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"${\Box}_{\Box}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 15,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue
+                      .previewValue(r"{1}^{2} $\rightarrow$ ${1}^{2}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"${\Box}^{\Box}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 15,
+          ),
+          LatexKey(
+            KeyboardText: r"$7$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$8$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$9$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$($",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$)$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+        ],
+      ),
+    );
+  }
+
+  fx2() {
+    return Expanded(
+      child: Row(
+        children: [
+          LatexKey(
+            KeyboardText: r"$[$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 17,
+          ),
+          LatexKey(
+            KeyboardText: r"$]$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 17,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue.previewValue(
+                      r"\begin{cases}{a}\\{b}\\{c}\end{cases} $\rightarrow$ $\begin{cases}{a}\\{b}\\{c}\end{cases}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"$\begin{cases}{\Box}\\{\Box}\\{\Box}\end{cases}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 6,
+          ),
+          LatexKey(
+            // onLongPress: () {
+            //   setState(() {
+            //     isLong = true;
+            //   });
+            // },
+            // onHightChange: (v) {
+            //   setState(() {
+            //     isHighLight = v;
+            //   });
+            //   if (isHighLight == true) {
+            //     setState(() {
+            //       widget.changeValue
+            //           .previewValue(r"\sqrt[1]{2} $\rightarrow$ $\sqrt[1]{2}$");
+            //     });
+            //   } else {
+            //     Future.delayed(const Duration(seconds: 2), () {
+            //       change();
+            //     });
+            //   }
+            //   // else {
+            //   // Timer(Duration(seconds: 1), change());
+            //   // }
+            //   print(isHighLight);
+            // },
+            KeyboardText: r"$\R$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 15,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue
+                      .previewValue(r"\sqrt[1]{2} $\rightarrow$ $\sqrt[1]{2}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"$\sqrt[\Box]{\Box}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 15,
+          ),
+          LatexKey(
+            KeyboardText: r"$4$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$5$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$6$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$\times$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$\div$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+        ],
+      ),
+    );
+  }
+
+  fx3() {
+    return Expanded(
+      child: Row(
+        children: [
+          LatexKey(
+            KeyboardText: r"$|$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 17,
+          ),
+          LatexKey(
+            KeyboardText: r"$,$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 17,
+          ),
+          LatexKey(
+            KeyboardText: r"$;$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue
+                      .previewValue(r"D_{a} $\rightarrow$ $D_{a}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"$D_{\Box}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 12,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue
+                      .previewValue(r"\frac{1}{2} $\rightarrow$ $\frac{1}{2}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"$\frac{\Box}{\Box}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 12,
+          ),
+          LatexKey(
+            KeyboardText: r"$1$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$2$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$3$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$+$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$-$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+        ],
+      ),
+    );
+  }
+
+  fx4() {
+    return Expanded(
+      child: Row(
+        children: [
+          LatexKey(
+            KeyboardText: r"$\in$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$\infty$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue.previewValue(r"f(x) $\rightarrow$ $f(x)$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              //else {
+              //   Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"$f(x)$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 15,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue
+                      .previewValue(r"f^{a}(b) $\rightarrow$ $f^{a}(b)$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              //else {
+              //   Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"$f^{\Box}(\Box)$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 10,
+          ),
+          LatexKey(
+            KeyboardText: r"$\cdot$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$0$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$.$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$\ne$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$=$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          ButtonKey(
+            color: Colors.grey,
+
+            // onLongPress: () {},
+            icon: Icons.backspace,
+            tap: () {
+              widget.onBackspace.call();
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  sinX1() {
+    return Expanded(
+      child: Row(
+        children: [
+          LatexKey(
+            KeyboardText: r"$\sin$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 17,
+          ),
+          LatexKey(
+            KeyboardText: r"$\csc$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 17,
+          ),
+          LatexKey(
+            KeyboardText: r"$\theta$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$\pi$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue
+                      .previewValue(r"{1}^{2} $\rightarrow$ ${1}^{2}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"${\Box}^{\Box}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 15,
+          ),
+          LatexKey(
+            KeyboardText: r"$7$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$8$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$9$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$($",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$)$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+        ],
+      ),
+    );
+  }
+
+  sinX2() {
+    return Expanded(
+      child: Row(
+        children: [
+          LatexKey(
+            KeyboardText: r"$\cos$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 17,
+          ),
+          LatexKey(
+            KeyboardText: r"$\sec$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 17,
+          ),
+          LatexKey(
+            KeyboardText: r"$\triangle$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$^\circ$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 15,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue
+                      .previewValue(r"\sqrt[1]{2} $\rightarrow$ $\sqrt[1]{2}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"$\sqrt[\Box]{\Box}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 15,
+          ),
+          LatexKey(
+            KeyboardText: r"$4$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$5$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$6$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$\times$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$\div$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+        ],
+      ),
+    );
+  }
+
+  sinX3() {
+    return Expanded(
+      child: Row(
+        children: [
+          LatexKey(
+            KeyboardText: r"$\tan$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 17,
+          ),
+          LatexKey(
+            KeyboardText: r"$\cot$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 17,
+          ),
+          LatexKey(
+            KeyboardText: r"$\Box$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue.previewValue(
+                      r"\mathrm{\hat{ABC}} $\rightarrow$ $\mathrm{\hat{ABC}}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"$\mathrm{\hat{ABC}}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 12,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue
+                      .previewValue(r"\frac{1}{2} $\rightarrow$ $\frac{1}{2}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"$\frac{\Box}{\Box}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 12,
+          ),
+          LatexKey(
+            KeyboardText: r"$1$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$2$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$3$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$+$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$-$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+        ],
+      ),
+    );
+  }
+
+  sinX4() {
+    return Expanded(
+      child: Row(
+        children: [
+          LatexKey(
+            KeyboardText: r"$\mathrm{A}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$\mathrm{B}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$\mathrm{C}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue.previewValue(
+                      r"\mathrm{\overline{AB}} $\rightarrow$ $\mathrm{\overline{AB}}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              //else {
+              //   Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"$\mathrm{\overline{AB}}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 15,
+          ),
+          LatexKey(
+            KeyboardText: r"$\cdot$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$0$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$.$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$\ne$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$=$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          ButtonKey(
+            color: Colors.grey,
+
+            // onLongPress: () {},
+            icon: Icons.backspace,
+            tap: () {
+              widget.onBackspace.call();
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  x21() {
+    return Expanded(
+      child: Row(
+        children: [
+          LatexKey(
+            KeyboardText: r"$x^2$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$\%$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue.previewValue(
+                      r"{r}_{circle} $\rightarrow$ ${r}_{circle}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"${\Box}_{\Box}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$\pi$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue
+                      .previewValue(r"{1}^{2} $\rightarrow$ ${1}^{2}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"${\Box}^{\Box}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 15,
+          ),
+          LatexKey(
+            KeyboardText: r"$7$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$8$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$9$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$($",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$)$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+        ],
+      ),
+    );
+  }
+
+  x22() {
+    return Expanded(
+      child: Row(
+        children: [
+          LatexKey(
+            KeyboardText: r"$\infty$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$!$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue
+                      .previewValue(r"\dot{1} $\rightarrow$ $\dot{1}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"$\dot{\Box}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue
+                      .previewValue(r"\sqrt{2} $\rightarrow$ $\sqrt{2}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"$\sqrt{\Box}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 15,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue
+                      .previewValue(r"\sqrt[1]{2} $\rightarrow$ $\sqrt[1]{2}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"$\sqrt[\Box]{\Box}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 15,
+          ),
+          LatexKey(
+            KeyboardText: r"$4$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$5$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$6$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$\times$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$\div$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+        ],
+      ),
+    );
+  }
+
+  x23() {
+    return Expanded(
+      child: Row(
+        children: [
+          LatexKey(
+            KeyboardText: r"$|$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$/$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$,$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue.previewValue(
+                      r"{1}\dfrac{1}{2} $\rightarrow$ ${1}\dfrac{1}{2}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"${\Box}\dfrac{\Box}{\Box}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 12,
+          ),
+          LatexKey(
+            onLongPress: () {
+              setState(() {
+                isLong = true;
+              });
+            },
+            onHightChange: (v) {
+              setState(() {
+                isHighLight = v;
+              });
+              if (isHighLight == true) {
+                setState(() {
+                  widget.changeValue
+                      .previewValue(r"\frac{1}{2} $\rightarrow$ $\frac{1}{2}$");
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2), () {
+                  change();
+                });
+              }
+              // else {
+              // Timer(Duration(seconds: 1), change());
+              // }
+              print(isHighLight);
+            },
+            KeyboardText: r"$\frac{\Box}{\Box}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 12,
+          ),
+          LatexKey(
+            KeyboardText: r"$1$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$2$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$3$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$+$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$-$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+        ],
+      ),
+    );
+  }
+
+  x24() {
+    return Expanded(
+      child: Row(
+        children: [
+          LatexKey(
+            KeyboardText: r"$a$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$b$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$c$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$:$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            // onLongPress: () {
+            //   setState(() {
+            //     isLong = true;
+            //   });
+            // },
+            // onHightChange: (v) {
+            //   setState(() {
+            //     isHighLight = v;
+            //   });
+            //   if (isHighLight == true) {
+            //     setState(() {
+            //       widget.changeValue
+            //           .previewValue(r"\dot{1}} $\rightarrow$ $\dot{1}$");
+            //     });
+            //   } else {
+            //     Future.delayed(const Duration(seconds: 2), () {
+            //       change();
+            //     });
+            //   }
+            //   //else {
+            //   //   Timer(Duration(seconds: 1), change());
+            //   // }
+            //   print(isHighLight);
+            // },
+            KeyboardText: r"$\cdot$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$0$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$.$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$\ne$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$=$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          ButtonKey(
+            color: Colors.grey,
+
+            // onLongPress: () {},
+            icon: Icons.backspace,
+            tap: () {
+              widget.onBackspace.call();
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  commomRow() {
+    return Expanded(
+      child: Row(
+        children: [
+          LatexKey(
+            KeyboardText: r"$<$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$>$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$\leq$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$\geq$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$\pm$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$x$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$y$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$z$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          ButtonKey(
+            color: Colors.grey,
+            flex: 1,
+            icon: Icons.space_bar,
+            tap: () {
+              textInputHandler(" ");
+            },
+          ),
+          ButtonKey(
+            color: Colors.grey,
+            flex: 1,
+            icon: Icons.skip_next,
+            tap: () {
+              textInputHandler("\n");
+            },
+          ),
         ],
       ),
     );

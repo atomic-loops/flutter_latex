@@ -75,11 +75,10 @@ class _CovertLatexState extends State<CovertLatex> {
           WidgetSpan(
               alignment: PlaceholderAlignment.middle,
               child: DefaultTextStyle.merge(
-                child: Math.tex(laTeXMatch.group(6)!.trim()),
-                // style: Theme.of(context).textTheme.headline4!.copyWith(
-                //     fontWeight: FontWeight.bold,
-                //     fontSize:
-                //         Theme.of(context).textTheme.bodyText1!.fontSize! * 2)),
+                child: Padding(
+                  padding: const EdgeInsets.all(1.0),
+                  child: Math.tex(laTeXMatch.group(6)!.trim()),
+                ),
               )),
           const TextSpan(text: '\n')
         ]);

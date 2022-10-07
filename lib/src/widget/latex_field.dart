@@ -45,7 +45,7 @@ class _LatexFieldState extends State<LatexField> {
               readOnly: true,
               showCursor: true,
               minLines: 1,
-              maxLines: 5,
+              maxLines: 7,
               controller: widget.changeValue.controller,
             ),
             // SizedBox(

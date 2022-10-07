@@ -40,8 +40,10 @@ class LatexKey extends StatelessWidget {
               onLongPress: onLongPress,
               onHighlightChanged: onHightChange,
               onTap: () {
-                onTextInput.call(
-                    isTexOn ? KeyboardText : KeyboardText.replaceAll("\$", ""));
+                onTextInput.call(isTexOn
+                    ? KeyboardText.replaceAll(r"\Box", "")
+                    : KeyboardText.replaceAll("\$", "")
+                        .replaceAll(r"\Box", ""));
               },
               child: Center(
                   child: CovertLatex(
@@ -82,6 +84,7 @@ class ButtonKey extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(4.0),
         child: Material(
+          borderRadius: BorderRadius.circular(7),
           color: color,
           child: InkWell(
             onTap: tap,
