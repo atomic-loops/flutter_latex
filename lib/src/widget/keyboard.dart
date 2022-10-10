@@ -232,10 +232,11 @@ class _LatexKeyboardState extends State<LatexKeyboard> {
                   Expanded(
                     flex: 4,
                     child: Body(
+                      delimiter: delimiter,
                       onBackspace: backspaceHandler,
                       onTextInput: textInputHandler,
                       node: widget.node,
-
+                      betaGamma: betaGamma,
                       alpha: aplpha, x2: x2, changeValue: widget.changeValue,
                       idTexOn: delimiter, fx: fx, sinx: sin, elnx: elnx,
                       intdx: intdx, matrix: matrix,
@@ -326,7 +327,9 @@ class Body extends StatefulWidget {
       required this.elnx,
       required this.intdx,
       required this.matrix,
-      required this.x2})
+      required this.betaGamma,
+      required this.x2,
+      required this.delimiter})
       : super(key: key);
   final ChangeValue changeValue;
   final ValueSetter<String> onTextInput;
@@ -340,7 +343,8 @@ class Body extends StatefulWidget {
   bool elnx;
   bool intdx;
   bool matrix;
-
+  bool betaGamma;
+  bool delimiter;
   @override
   State<Body> createState() => _BodyState();
 }
@@ -377,6 +381,8 @@ class _BodyState extends State<Body> {
                 intdx()
               ] else if (widget.matrix == true) ...[
                 matrix()
+              ] else if (widget.betaGamma == true) ...[
+                betaGamma()
               ]
             ],
           ),
@@ -449,6 +455,409 @@ class _BodyState extends State<Body> {
     return Expanded(
       child: Column(
         children: [matrix1(), matrix2(), matrix3(), matrix4(), commomRow()],
+      ),
+    );
+  }
+
+  betaGamma() {
+    return Expanded(
+      child: Column(
+        children: [
+          betaGamma1(),
+          betaGamma2(),
+          betaGamma3(),
+          betaGamma4(),
+          betaGamma5()
+        ],
+      ),
+    );
+  }
+
+  betaGamma1() {
+    return Expanded(
+      child: Row(
+        children: [
+          LatexKey(
+            KeyboardText: isCapital ? r"$\mathscr{U}$" : r"$\alpha$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? r"$\Delta$" : r"$\delta$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? r"$\Lambda$" : r"$\lambda$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? r"$\nabla$" : r"$\rho$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? r"$\Phi$" : r"$\phi$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? r"$\mathrm{E}$" : r"$e$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? r"$\mathrm{P}$" : r"$p$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? r"$\mathrm{I}$" : r"$i$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? r"$\mathrm{U}$" : r"$u$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? r"$\mathrm{F}$" : r"$f$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+        ],
+      ),
+    );
+  }
+
+  betaGamma2() {
+    return Expanded(
+      child: Row(
+        children: [
+          LatexKey(
+            KeyboardText: isCapital ? r"$\infty$" : r"$\beta$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? r"$\ell$" : r"$\varepsilon$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? r"$\propto$" : r"$\mu$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? r"$\Sigma$" : r"$\sigma$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? r"$\Psi$" : r"$\psi$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? r"$\mathrm{M}$" : r"$m$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? r"$\mathrm{Q}$" : r"$q$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? r"$\mathrm{J}$" : r"$j$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? r"$\mathrm{V}$" : r"$v$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? r"$\mathrm{G}$" : r"$g$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+        ],
+      ),
+    );
+  }
+
+  betaGamma3() {
+    return Expanded(
+      child: Row(
+        children: [
+          LatexKey(
+            KeyboardText: isCapital ? r"$\Gamma$" : r"$\gamma$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? r"$\Theta$" : r"$\theta$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? r"$\Pi$" : r"$\pi$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? r"$\Tau$" : r"$\tau$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? r"$\Omega$" : r"$\omega$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? r"$\mathrm{N}$" : r"$n$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? r"$\mathrm{R}$" : r"$\mathrm{r}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? r"$\mathrm{K}$" : r"$\mathrm{k}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? r"$\mathrm{W}$" : r"$\mathrm{w}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? r"$\mathrm{H}$" : r"$\mathrm{h}$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+        ],
+      ),
+    );
+  }
+
+  betaGamma4() {
+    return Expanded(
+      child: Row(
+        children: [
+          LatexKey(
+            KeyboardText: isCapital ? r"$\cup$" : r"$\to$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? r"$\cap$" : r"$\leftrightarrow$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? r"$\ldots$" : r"$\lor$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? r"$?$" : r"$\land$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? r"$\{$" : r"$[$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? r"$\}$" : r"$]$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$($",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r"$)$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          ButtonKey(
+            color: Colors.grey,
+            iconsColors: isCapital ? Colors.blue : Colors.black,
+            icon: Icons.upgrade,
+            tap: () {
+              setState(() {
+                isCapital = !isCapital;
+              });
+            },
+          ),
+          ButtonKey(
+            color: Colors.grey,
+
+            // onLongPress: () {},
+            icon: Icons.backspace,
+            tap: () {
+              widget.onBackspace.call();
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  betaGamma5() {
+    return Expanded(
+      child: Row(
+        children: [
+          LatexKey(
+            KeyboardText: isCapital ? r"$\in$" : r"$\because$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? r"$\notin$" : r"$\therefore$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? r"$\subset$" : r"$\forall$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? r"$\not\subset$" : r"$\exist$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          isCapital
+              ? LatexKey(
+                  KeyboardText: r"$\varnothing$",
+                  onTextInput: textInputHandler,
+                  isTexOn: widget.idTexOn,
+                  fontSize: 20,
+                )
+              : LatexKey(
+                  onLongPress: () {
+                    setState(() {
+                      isLong = true;
+                    });
+                  },
+                  onHightChange: (v) {
+                    setState(() {
+                      isHighLight = v;
+                    });
+                    if (isHighLight == true) {
+                      setState(() {
+                        widget.changeValue
+                            .previewValue(r"\vec{u} $\rightarrow$ $\vec{u}$");
+                      });
+                    } else {
+                      Future.delayed(const Duration(seconds: 2), () {
+                        change();
+                      });
+                    }
+                    // else {
+                    // Timer(Duration(seconds: 1), change());
+                    // }
+                    print(isHighLight);
+                  },
+                  KeyboardText: r"$\vec{\Box}$",
+                  onTextInput: textInputHandler,
+                  isTexOn: widget.idTexOn,
+                  fontSize: 20,
+                ),
+          LatexKey(
+            KeyboardText: isCapital ? r"$\&$" : r"$\sim$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: isCapital ? r"'" : r"$\approx$",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          LatexKey(
+            KeyboardText: r",",
+            onTextInput: textInputHandler,
+            isTexOn: widget.idTexOn,
+            fontSize: 20,
+          ),
+          ButtonKey(
+            color: Colors.grey,
+            flex: 1,
+            icon: Icons.space_bar,
+            tap: () {
+              widget.delimiter == true
+                  ? textInputHandler(r"$\~$")
+                  : textInputHandler(r"\~");
+            },
+          ),
+          ButtonKey(
+            color: Colors.grey,
+            flex: 1,
+            icon: Icons.skip_next,
+            tap: () {
+              textInputHandler("\n");
+            },
+          ),
+        ],
       ),
     );
   }
@@ -3438,7 +3847,9 @@ class _BodyState extends State<Body> {
             flex: 1,
             icon: Icons.space_bar,
             tap: () {
-              textInputHandler(" ");
+              widget.delimiter == true
+                  ? textInputHandler(r"\~")
+                  : textInputHandler(" ");
             },
           ),
           ButtonKey(
