@@ -6,3 +6,4 @@ export 'package:flutter_latex/src/foundation/keyboardField.dart';
 export 'package:flutter_latex/src/widget/keyboard.dart';
 export 'package:flutter_latex/src/widget/latex_field.dart';
 export 'package:flutter_latex/src/foundation/value.dart';
+export 'package:flutter_latex/src/foundation/autoRender.dart';

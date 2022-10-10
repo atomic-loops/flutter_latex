@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Screen1(),
+      home: DetailPage(),
     );
   }
 }
@@ -157,38 +157,26 @@ class _DetailPageState extends State<DetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Column(
-        children: [
-          Text("Question ${index1 + 1}"),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: CovertLatex(
-              textStyle: TextStyle(fontSize: 17),
-              laTeXCode: Text(data[index1]
-                  .replaceAll("\\(", "\$")
-                  .replaceAll("\\)", "\$")
-                  .replaceAll("<br>", "\n\n")),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Text("Question ${index1 + 1}"),
+            Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: AutoRander(
+                  latex: data[index1],
+                )),
+            Text("Solution ${index1 + 1}"),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: AutoRander(
+                    latex: solution[index1],
+                  )),
             ),
-          ),
-          Text("Solution ${index1 + 1}"),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: CovertLatex(
-                textStyle: GoogleFonts.sarabun(fontSize: 17),
-                laTeXCode: Text(
-                  solution[index1]
-                      .replaceAll("\\(", "\$")
-                      .replaceAll("\\)", "\$")
-                      .replaceAll("<br>", "\n\n"),
-                  // .replaceAll(r"\text", ""),
-                  style: GoogleFonts.sarabun(fontSize: 17),
-                ),
-              ),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
